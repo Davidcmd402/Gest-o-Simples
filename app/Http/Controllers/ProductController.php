@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\ProductService;
+use App\Services\SupplierService;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
 
+    public function __construct(protected ProductService $productService, protected SupplierService $supplierService)
+{
+    $this->productService = $productService;
+    $this->supplierService = $supplierService;
+}
+    public function index(Request $request){
+        $products = $this->productService->getFilteredProducts($request);
+        $suppliers = $this->supplierService->getAllSuppliers();
 
-        return view('product.index');
+        return view('product.index', compact('products', 'suppliers'));
     }
 
     /**

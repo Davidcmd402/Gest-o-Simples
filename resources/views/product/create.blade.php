@@ -84,15 +84,10 @@
         </select>
       </div>
 
-      <div class="col-md-6 mb-3">
-        <label>Tipo</label>
-        <select name="type" class="form-select" required>
-          <option value="">Selecione</option>
-          @foreach (['underwear', 'lingerie', 'pajamas', 'boxer', 'briefs', 'sunga'] as $type)
-          <option value="{{ $type }}">{{ ucfirst($type) }}</option>
-          @endforeach
-        </select>
-      </div>
+        <div class="col-md-6 mb-3">
+            <label>Tipo</label>
+            <input type="text" name="brand" class="form-control" required>
+        </div>
 
       <div class="col-md-6 mb-3">
         <label>Marca</label>

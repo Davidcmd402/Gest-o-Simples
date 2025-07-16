@@ -9,13 +9,11 @@
       <label class="form-label">Fornecedor</label>
       <select name="supplier_id" class="form-select">
         <option value="">Todos os Fornecedores</option>
-        @if ($suppliers)
         @foreach ($suppliers as $supplier)
         <option value="{{ $supplier->id }}" {{ request('supplier_id') == $supplier->id ? 'selected' : '' }}>
           {{ $supplier->name }}
         </option>
         @endforeach
-        @endif
       </select>
     </div>
 
@@ -39,10 +37,9 @@
 
 
   <div class="row">
-    @if ($products)
     @foreach ($products as $product)
     <div class="col-md-4 mb-3">
-      <a href="{{ route('product.show', $product) }}" class="text-decoration-none text-dark">
+      <a href="{{ route('', $product) }}" class="text-decoration-none text-dark">
         <div class="card h-100">
           {{-- Área da imagem --}}
           <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
@@ -69,8 +66,6 @@
       </a>
     </div>
     @endforeach
-
-    @endif
   </div>
 
   <div class="modal fade" id="createProduct" tabindex="-1" aria-labelledby="createProduct" aria-hidden="true">
@@ -94,9 +89,6 @@
     </div>
   </div>
 
-  @if ()
   {{ $products->links() }}
-
-  @endif
 </div>
 @endsection

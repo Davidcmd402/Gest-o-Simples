@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('products', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('image')->nullable();
+
+            $table->foreignId('product_id')
+                  ->nullable()
+                  ->constrained('products')
+                  ->nullOnDelete();
+
             $table->unsignedInteger('quantity');
-            $table->enum('size', ['PP', 'P', 'M', 'G', 'GG']);
-            $table->string('type');
-            $table->string('brand', 100);
-            $table->string('color', 50);
-            $table->decimal('sale_price', 10, 2);
+            $table->decimal('sale_price', 10, 2); // preço no momento da venda
+
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('sales');
     }
 };

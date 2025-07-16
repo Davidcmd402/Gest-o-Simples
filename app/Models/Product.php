@@ -17,4 +17,16 @@ class Product extends Model
         'sale_price',
         'image'
     ];
+
+    public function suppliers()
+    {
+        return $this->belongsToMany(Supplier::class, 'product_supplier')
+                    ->withPivot('purchase_price')
+                    ->withTimestamps();
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }
