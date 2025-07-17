@@ -4,62 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Services\SupplierService;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct(protected SupplierService $supplierService) {
+        $this->supplierService = $supplierService;
+    }
+
     public function index()
     {
-        //
+        $suppliers = $this->supplierService->getSupplierPagination(10);
+        return view('supplier.index', compact('suppliers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $supplier = $this->supplierService->newSupplier();
+        return view('supplier.create', compact('supplier'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $this->supplierService->createSupplier($request);
+        return redirect()->route('supplier.index')->with('success', 'Fornecedor criado com sucesso!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Supplier $supplier)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Supplier $supplier)
     {
-        //
+        return view('supplier.edit', compact('supplier'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $this->supplierService->updateSupplier($request, $supplier);
+        return redirect()->route('supplier.index')->with('success', 'Fornecedor atualizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Supplier $supplier)
     {
-        //
+        $this->supplierService->delete($supplier);
+        return redirect()->route('supplier.index')->with('success', 'Fornecedor removido com sucesso!');
     }
 }

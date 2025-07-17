@@ -23,7 +23,7 @@
               <a class="nav-link active" aria-current="page" href="/product">Produtos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Fornecedores</a>
+              <a class="nav-link" href="/supplier">Fornecedores</a>
             </li>
             <li class="nav-item">
               <a href="" class="nav-link">Relatório de Vendas</a>
