@@ -8,7 +8,7 @@ use App\Models\Purchase;
 class PurchaseService {
 
 
-    public function store($data, $product) {
+    public function createPurchase($data, $product) {
         Purchase::create([
             'product_id' => $product->id,
             'supplier_id' => $data['supplier'],

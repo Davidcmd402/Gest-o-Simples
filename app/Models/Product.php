@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $table = 'products';
+    protected $table = 'products'; // <- Nome real da tabela no banco
        protected $fillable = [
         'name',
         'size',
@@ -15,7 +15,9 @@ class Product extends Model
         'brand',
         'quantity',
         'sale_price',
+        'purchase_price',
         'image'
+        // outros campos que queira permitir mass assignment
     ];
 
     public function suppliers()

@@ -18,10 +18,24 @@
     </div>
 
     <div class="col-md-3">
-      <label class="form-label">Preço Máximo</label>
-      <input type="number" name="max_purchase_price" class="form-control" value="{{ request('max_purchase_price') }}"
-        placeholder="Preço Máximo">
+        <input
+            type="checkbox"
+            name="is_purchase"
+            class="form-check-input"
+            id="toggleTipoValor"
+            {{ request('is_purchase') ? 'checked' : '' }}
+        >
+        <label class="form-label" id="valueLabel">Valor de Venda</label>
+
+            <input
+            type="number"
+            name="price_value"
+            class="form-control"
+            placeholder="R$"
+            value="{{ request('price_value') }}"
+            >
     </div>
+
 
     <div class="col-md-3 d-flex gap-2">
       <button class="btn btn-primary w-100" type="submit">Filtrar</button>
@@ -39,7 +53,7 @@
   <div class="row">
     @foreach ($products as $product)
     <div class="col-md-4 mb-3">
-      <a href="{{ route('', $product) }}" class="text-decoration-none text-dark">
+      <a  class="text-decoration-none text-dark">
         <div class="card h-100">
           {{-- Área da imagem --}}
           <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
@@ -52,7 +66,9 @@
           {{-- Informações do produto --}}
           <div class="card-body">
             <h5 class="card-title">{{ $product->name }}</h5>
-            <p class="card-text fw-bold">R$ {{ number_format($product->sale_price, 2, ',', '.') }}</p>
+            <p class="card-text fw-bold">Valor de venda: R$ {{ number_format($product->sale_price, 2, ',', '.') }}</p>
+            <p class="card-text fw-bold">Valor de compra: R$ {{ number_format($product->purchase_price, 2, ',', '.') }}</p>
+            <p class="card-text">{{ $product->type }}</p>
             <p class="card-text">
               Fornecedor:
               @if($product->suppliers->isNotEmpty())

@@ -16,13 +16,11 @@ class Purchase extends Model
         'purchase_price',
     ];
 
-    // Produto relacionado à compra
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
 
-    // Fornecedor da compra (opcional)
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);

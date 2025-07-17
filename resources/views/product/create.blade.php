@@ -86,7 +86,7 @@
 
         <div class="col-md-6 mb-3">
             <label>Tipo</label>
-            <input type="text" name="brand" class="form-control" required>
+            <input type="text" name="type" class="form-control" required>
         </div>
 
       <div class="col-md-6 mb-3">

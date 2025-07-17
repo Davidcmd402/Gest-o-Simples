@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
+
     protected $fillable = [
         'name',
         'phone_number',
@@ -16,10 +17,11 @@ class Supplier extends Model
         'zip_code',
         'is_active',
     ];
-    public function product()
+    public function products()
 {
     return $this->belongsToMany(Product::class, 'product_supplier')
                 ->withPivot('purchase_price')
                 ->withTimestamps();
 }
+
 }

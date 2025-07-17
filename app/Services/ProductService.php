@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Services\PurchaseService;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,7 @@ class ProductService
         return Product::all();
     }
 
-    public function store($request)
+    public function createProduct($request)
     {
         $rules = [
             'name' => 'required|string|max:100',
@@ -30,6 +31,7 @@ class ProductService
             'brand' => 'required|string|max:100',
             'color' => 'required|string|max:50',
             'sale_price' => 'required|numeric|min:0',
+            'purchase_price' => 'required|numeric|min:0',
             'supplier' => 'nullable|exists:suppliers,id',
             'purchase_price' => 'nullable|numeric|min:0',
         ];
@@ -53,6 +55,7 @@ class ProductService
             'brand' => $data['brand'],
             'color' => $data['color'],
             'sale_price' => $data['sale_price'],
+            'purchase_price' => $data['purchase_price'],
             'image' => $imageName
         ]);
 
@@ -66,7 +69,7 @@ class ProductService
 
         //cria e salva a compra realizada
 
-        $this->purchaseService->store($data, $product);
+        $this->purchaseService->createPurchase($data, $product);
 
     }
     public function getFilteredProducts(Request $request) {
@@ -80,8 +83,14 @@ class ProductService
             });
         }
 
-        if ($request->max_purchase_price) {
-            $query->where('purchase_price', '<=', $request->max_purchase_price);
+        if ($request->price_value !== null) {
+            if ($request->is_purchase) {
+
+                $query->where('purchase_price', '<=', $request->price_value);
+            } else {
+
+                $query->where('sale_price', '<=', $request->price_value);
+            }
         }
 
         return $query->paginate(12)->withQueryString();
