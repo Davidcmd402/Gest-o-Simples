@@ -59,9 +59,17 @@ class supplierService {
         $supplier->update($validated);
     }
 
-    function delete(Supplier $supplier) {
+    public function delete(Supplier $supplier) {
 
         $supplier->delete();
+    }
+
+    public function getFilteredSuppliers($request, $quantity = 10) {
+        if ($request->key) {
+            return Supplier::where('name', 'like', '%' . $request->key . '%')->paginate($quantity);
+        }
+
+        return Supplier::paginate($quantity);
     }
 
 
