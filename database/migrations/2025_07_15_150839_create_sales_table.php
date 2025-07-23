@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('product_id')
-                  ->nullable()
-                  ->constrained('products')
-                  ->nullOnDelete();
-
+                ->nullable()
+                ->constrained('products')
+                ->nullOnDelete();
+            $table->string('product_name', 100);
             $table->unsignedInteger('quantity');
-            $table->decimal('sale_price', 10, 2); // preço no momento da venda
-
+            $table->decimal('sale_price', 10, 2);
             $table->timestamps();
         });
     }

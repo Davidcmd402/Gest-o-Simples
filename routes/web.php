@@ -17,5 +17,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     Route::resource('product', ProductController::class);
+    Route::post('product/{product}/sell', [ProductController::class, 'sell'])->name('product.sell');
     Route::resource('supplier', SupplierController::class);
 });

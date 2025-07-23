@@ -11,11 +11,12 @@ class ProductController extends Controller
 {
 
     public function __construct(protected ProductService $productService, protected SupplierService $supplierService)
-{
-    $this->productService = $productService;
-    $this->supplierService = $supplierService;
-}
-    public function index(Request $request){
+    {
+        $this->productService = $productService;
+        $this->supplierService = $supplierService;
+    }
+    public function index(Request $request)
+    {
         $products = $this->productService->getFilteredProducts($request);
         $suppliers = $this->supplierService->getAllSuppliers();
 
@@ -28,7 +29,7 @@ class ProductController extends Controller
     public function create()
     {
         $suppliers = $this->supplierService->getAllSuppliers();
-        return view('products.create', compact('suppliers'));
+        return view('product.create', compact('suppliers'));
     }
 
     /**
@@ -46,7 +47,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $suppliers = $this->supplierService->getAllSuppliers();
+        $product->load('suppliers');
+        return view('product.show', compact('product', 'suppliers'));
     }
 
     /**
@@ -54,7 +57,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $data = $this->productService->productEdit($product);
+        $product = $data['product'];
+        $suppliers = $data['suppliers'];
+        return view('product.edit', compact('product', 'suppliers'));
     }
 
     /**
@@ -62,7 +68,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $this->productService->productUpdate($request, $product);
+
+        return redirect()->route('product.index')->with('success', 'Produto atualizado com sucesso!');
     }
 
     /**
@@ -70,6 +78,14 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->productService->destroy($product);
+        return redirect()->route('product.index')->with('success', 'Produto excluído com sucesso!');
+    }
+
+    public function sell(Request $request, Product $product)
+    {
+        $product = $this->productService->productSell($request, $product);
+
+        return redirect()->route('product.show', $product)->with('success', 'Venda realizada com sucesso!');
     }
 }

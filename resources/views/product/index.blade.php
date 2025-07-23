@@ -18,22 +18,12 @@
     </div>
 
     <div class="col-md-3">
-        <input
-            type="checkbox"
-            name="is_purchase"
-            class="form-check-input"
-            id="toggleTipoValor"
-            {{ request('is_purchase') ? 'checked' : '' }}
-        >
-        <label class="form-label" id="valueLabel">Valor de Venda</label>
+      <input type="checkbox" name="is_purchase" class="form-check-input" id="toggleTipoValor"
+        {{ request('is_purchase') ? 'checked' : '' }}>
+      <label class="form-label" id="valueLabel">Valor de Venda</label>
 
-            <input
-            type="number"
-            name="price_value"
-            class="form-control"
-            placeholder="R$"
-            value="{{ request('price_value') }}"
-            >
+      <input type="number" name="price_value" class="form-control" placeholder="R$"
+        value="{{ request('price_value') }}">
     </div>
 
 
@@ -53,7 +43,7 @@
   <div class="row">
     @foreach ($products as $product)
     <div class="col-md-4 mb-3">
-      <a  class="text-decoration-none text-dark">
+      <a href="{{ route('product.show', $product) }}" class="text-decoration-none text-dark">
         <div class="card h-100">
           {{-- Área da imagem --}}
           <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
@@ -67,7 +57,8 @@
           <div class="card-body">
             <h5 class="card-title">{{ $product->name }}</h5>
             <p class="card-text fw-bold">Valor de venda: R$ {{ number_format($product->sale_price, 2, ',', '.') }}</p>
-            <p class="card-text fw-bold">Valor de compra: R$ {{ number_format($product->purchase_price, 2, ',', '.') }}</p>
+            <p class="card-text fw-bold">Valor de compra: R$ {{ number_format($product->purchase_price, 2, ',', '.') }}
+            </p>
             <p class="card-text">{{ $product->type }}</p>
             <p class="card-text">
               Fornecedor:
@@ -82,6 +73,10 @@
       </a>
     </div>
     @endforeach
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    {{ $products->withQueryString()->links('vendor.pagination.bootstrap-5') }}
   </div>
 
   <div class="modal fade" id="createProduct" tabindex="-1" aria-labelledby="createProduct" aria-hidden="true">
@@ -104,7 +99,5 @@
       </div>
     </div>
   </div>
-
-  {{ $products->links() }}
 </div>
 @endsection
