@@ -1,3 +1,10 @@
 .object-fit-cover {
-  object-fit: cover;
+    object-fit: cover;
+}
+@media (max-width: 576px) {
+    #imagePreview {
+        max-width: 100% !important;
+        height: auto !important;
+        margin-top: 1rem;
+    }
 }

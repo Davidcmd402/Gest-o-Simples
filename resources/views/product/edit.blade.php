@@ -81,7 +81,7 @@
       <div class="col-md-6 mb-3">
         <label for="purchase_price" class="form-label">Preço de Compra</label>
         <input type="number" name="purchase_price" id="purchase_price" class="form-control" step="0.01"
-          value="{{ old('purchase_price', optional(optional($product->suppliers->first())->pivot)->purchase_price) }}">
+          value="{{ old('purchase_price', $product->purchase_price) }}" required>
       </div>
 
       <div class="col-md-12 mb-3">
@@ -98,8 +98,5 @@
       </div>
     </div>
 
-    <div class="text-end mt-4">
-      <button type="submit" class="btn btn-primary px-4">Salvar Alterações</button>
-    </div>
   </form>
 </div>
